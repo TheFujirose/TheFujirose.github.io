@@ -13,7 +13,7 @@ export const Profile = ({
   size = 'Horizontal',
   name = 'Carson Fujita',
   title = 'Computer Programmer',
-  description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  description = '',
   imageUrl = 'http://localhost:3845/assets/054dfe02e425078fdd66113858fbed2e929f9c10.png',
 }: ProfileProps) => {
   const imageSize = size === 'Vertical' ? 327 : 136;
@@ -47,7 +47,6 @@ export const Profile = ({
       >
         <Box>
           <Typography
-            variant="headline"
             sx={{
               fontSize: size === 'Vertical' ? '24px' : '24px',
               fontWeight: 400,
@@ -59,7 +58,6 @@ export const Profile = ({
             {name}
           </Typography>
           <Typography
-            variant="titleMedium"
             sx={{
               fontSize: '16px',
               fontWeight: 500,
@@ -80,7 +78,7 @@ export const Profile = ({
             color: '#1d1b20',
           }}
         >
-          {description}
+          <a href='https://youtube.com/shorts/8l5D6i6iLpA?feature=share' target='blank'>See Prototype</a>
         </Typography>
       </Box>
     </Box>
