@@ -1,5 +1,4 @@
-import { Box, Card, CardContent, Typography, Stack, Avatar } from '@mui/material';
-import { Skill } from './Skill';
+import { Box, Typography, Avatar } from '@mui/material';
 
 interface ProfileProps {
   size?: 'Horizontal' | 'Vertical';
@@ -13,8 +12,6 @@ export const Profile = ({
   size = 'Horizontal',
   name = 'Carson Fujita',
   title = 'Computer Programmer',
-  description = '',
-  imageUrl = 'http://localhost:3845/assets/054dfe02e425078fdd66113858fbed2e929f9c10.png',
 }: ProfileProps) => {
   const imageSize = size === 'Vertical' ? 327 : 136;
 
@@ -28,7 +25,6 @@ export const Profile = ({
       }}
     >
       <Avatar
-        src={imageUrl}
         sx={{
           width: imageSize,
           height: imageSize,

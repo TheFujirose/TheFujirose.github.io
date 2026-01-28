@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from '@mui/material'
+import { Box , Stack, Typography } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
 import BuildIcon from '@mui/icons-material/Build'
 import AssignmentIcon from '@mui/icons-material/Assignment'
@@ -26,22 +26,7 @@ export const NavigationRail = ({ currentTab, onTabChange }: NavigationRailProps)
   ]
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 5,
-        height: '100%',
-        alignItems: 'center',
-        pt: 5.5,
-        pb: 7,
-        sticky: true,
-        position: 'sticky',
-        top: 0,
-        width: 96,
-        flexShrink: 0,
-      }}
-    >
+    <Box>
       {/* Menu FAB placeholder */}
       <Box sx={{ width: '100%' }} />
 
@@ -65,18 +50,7 @@ export const NavigationRail = ({ currentTab, onTabChange }: NavigationRailProps)
             onClick={() => onTabChange(idx)}
           >
             {/* Icon container */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 56,
-                height: 32,
-                borderRadius: 2,
-                backgroundColor: item.active ? '#e8def8' : 'transparent',
-                transition: 'background-color 0.2s ease',
-              }}
-            >
+            <Box>
               <Box
                 sx={{
                   display: 'flex',

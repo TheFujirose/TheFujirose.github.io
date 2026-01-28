@@ -20,7 +20,6 @@ export const Skill = ({ label = 'Skill' }: SkillProps) => {
       }}
     >
       <Typography
-        variant="labelLarge"
         sx={{
           fontSize: '14px',
           fontWeight: 500,
