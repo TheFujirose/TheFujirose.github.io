@@ -1,0 +1,274 @@
+\documentclass{report}
+
+% Define colors for hyperref
+\usepackage[svgnames]{xcolor}
+
+% Periwinkle is a amusing name for a color
+% very calm and gentle color.
+\definecolor{PeriwinkleBlue}{RGB}{192,202,245}
+
+% Wisteria blue
+% also calm, but a little deeper
+\definecolor{WisteriaBlue}{RGB}{139,157,237}
+
+% Periwinkle but actually purple
+\definecolor{Periwinkle}{RGB}{156,117,233}
+
+
+% URL packages
+\usepackage{hyperref}
+\usepackage{url}
+
+% set color to prevent borders
+\hypersetup{
+  colorlinks=true,
+  linkcolor=WisteriaBlue,
+  citecolor=PeriwinkleBlue,
+  urlcolor=Periwinkle
+}
+
+% Listings
+\usepackage{outlines}
+\usepackage{enumitem}
+\renewcommand{\outlinei}{description}
+\renewcommand{\outlineii}{itemize}
+% images
+\usepackage{graphicx} % Required for inserting images
+
+% code
+\usepackage{minted}
+
+
+% Citations
+\usepackage[style=apa,backend=biber]{biblatex}
+\usepackage[canadian]{babel}
+\usepackage{csquotes}
+
+% Citation Resource
+
+\addbibresource{./websites.bib}
+
+% Title
+\title{Requirements Document}
+\author{Carson H. Fujita}
+\date{November 2025}
+
+\begin{document}
+	% title page
+	\maketitle
+	\newpage
+
+	% ----------------------- OVERVIEW
+	\section*{Overview}
+	This document outlines the requirements and knowledge needed to produce a resume and portfolio website for employeer viewing. 
+
+	\section*{Content}
+	\begin{outline}
+		\1[{\hyperref[sec:factsheet]{Technical Skills Factsheet}}] Program and Skill Related Sheets
+		\1[{\hyperref[sec:resume]{Resume}}] Resume Requirements
+		\1[{\hyperref[sec:portfolio]{Portfolio}}] Portfolio Requirements
+	\end{outline}
+	\newpage
+	% ----------------------- TECHNICAL SKILL
+	\subsection*{Factsheet}
+    	\label{sec:factsheet} % This creates a label for reference
+	According to a program fact sheet (provided by Humber Polytechnic), there is a variety of skills learned from Computer Programming and Analysis program at Humber Polytechnic. These skills include:
+	\begin{itemize}
+		\item Database Administration, design and programming
+			\subitem ERD
+			\subitem Normalizing Database
+			\subitem Oracle
+			\subitem PostgreSQL
+			\subitem SQLlite
+		\item Data analytics, quality assurance
+		\item Java object-oriented applications
+			\subitem Javafx
+		\item Android mobile programming
+			\subitem React-Native
+		\item Front-end web development, PHP web development
+			\subitem React
+			\subitem EJS
+		\item Scripting in Unix\/Linux
+			\subitem Bash
+		\item Python applications, C\#.NET applications, XML
+			\subitem Django
+		\item System Analysis and Design (In progress)
+			\subitem UML diagrams
+	\end{itemize}
+
+	Skills I have picked up from highschool education from Mayfield Secondary School not already included:
+	\begin{itemize}
+		\item Java Swing
+		\item UML class diagrams
+		\item Arduino
+		\item Basic Binary
+	\end{itemize}
+
+	Skills from passion projects:
+	\begin{itemize}
+		\item LaTex
+		\item NVIM
+		\item Figma
+		\item Tmux
+		\item Bootstrap
+		\item Fedora Operating System
+		\item Ubuntu Operating System
+	\end{itemize}
+
+	Consider Including:
+	\begin{itemize}
+		\item Math passions
+			\subitem Linear Algebra
+			\subitem Trignometry
+	\end{itemize}
+
+	\subsection{Computer Programming and Analysis}
+	Applicant's program is \href{https://appliedtechnology.humber.ca/programs/computer-programming-and-analysis.html}{Computer Programming and Analysis}, the website describes the content as, 
+	\blockquote[{\cite[para. 2]{CPAN}}]{
+		in addition to learning programming skills in a variety of languages, from Java and ASP.NET to PHP, JavaScript, Python and mobile programming (Android and iOS), the courses are designed to give students a solid foundation in theory and practice in web development and design, Oracle database management and administration, project management, technical writing, and all facets of information systems. 
+	}
+
+	\newpage
+	% ----------------------- RESUME
+	\section{Resume}
+	\label{sec:resume} % This creates a label for reference
+	Construct a professional resume targeted to specific position and outline structure and format of professional resume.
+	The Co-op Readiness Session provided by Humber Polytechnic requires that this part be completed by December 1st, 2025.
+
+	\subsection*{Required Content}
+	The basic structure of the resume should include the following important sections:
+
+	\begin{outline}
+		\1[{\hyperref[sec:contactInformation]{Contact Information}}] Information for employeers to contact with
+		\1[{\hyperref[sec:objective]{Objective}}] The goal of this resume
+		\1[{\hyperref[sec:summarySkill]{Summary of Skills}}] The skills the applicant has
+		\1[{\hyperref[sec:education]{Education}}] The education the applicant has
+		\1[{\hyperref[sec:workExp]{Work Experience}}] The prior and current work duties of the applicant
+		\1[{\hyperref[sec:optionalResume]{Optional}}] Optional information on volunteer experiences, awards, etc
+		\1[{\hyperref[sec:optionalRef]{References}}] Optional message of references
+	\end{outline}
+
+	\subsection{Contact Information}
+    	\label{sec:contactInformation} % This creates a label for reference
+	The Contact Information section of the resume must start at the very top with the applicant name and last name; this allows employeers to reach out. It's important to note that Humber does not reccomend pictures, mention of age, marital status, children, or religion in this section. Additionally, be wary about placing private information online.
+
+	The contact information section should begin in the following order:
+	\begin{itemize}
+		\item First Name
+		\item Last Name
+			\subitem Name must be larger font size than contact information
+		\item City and Province
+		\item Telephone
+			\subitem Ensure voicemail is professional
+		\item Professional email
+		\item LinkedIn and GitHub link
+	\end{itemize}
+
+	Ensure the Github link is from the applicant's \hyperref[sec:portfolio]{portfolio}.
+
+	\subsubsection*{Section Requirements}
+	Needs to follow the standards outlined above by including the complete information section. Do not have inconsistences in font, and a causal email.
+
+	\subsection{Employment Objective}
+    	\label{sec:objective} % This creates a label for reference
+	This section declares the immediate intention of the candiate. Humber reccomends that applicants keep it simple as this project is a co-op position. It has a short, targeted statement that is aligned to realistic goals and steady motivation; also, it is important to outline that they are a co-op applicant.
+
+	Co-op work in-take term take place this year after 4th Semester, as a Fall intake this applicant work term is summer-fall 2026.
+
+	\subsubsection*{Examples}
+	Examples include:
+	\begin{enumerate}[label=(\alph*)] % label with lowercase letters in parenthesis
+		\item Co-op position in \emph{TERM\/YEAR} related to \emph{PROGRAM NAME}
+		\item \emph{PROGRAM NAME} student purseing a co-op work term where I can apply my strengths
+		\item Seeking a \emph{TERM\/YEAR} work experience in the field of \emph{PROGRAM NAME}
+	\end{enumerate}
+
+	\subsubsection*{Section Requirements}
+	This section needs to be to-the-point with high clarity. Needs to describe the type of work, what the applicant has to ofer with no excess. The availability term must be included. 
+
+	\subsection{Summary of Skills}
+    	\label{sec:summarySkill} % This creates a label for reference
+	One of the most important sections as it appears after the \hypertarget{sec:objective}{Objective} and outlines the most Relevant skills. Important to focus on the hard skills as employeers will scan this section first.
+
+	\begin{enumerate}
+		\item List top 3-5 technical skills that most relate to your \hyperref[sec:objective]{Objective}. (see \hyperref[sec:factsheet]{Program Fact Sheet})
+		\item Highlight accompishments or achievements
+		\item list top general employability skills or qualities related to \hyperref[sec:objective]{Objective}
+	\end{enumerate}
+
+	It requires a heading. Avoid tables as they are not capted by Applicant Tracking Systems (ATS).
+
+	\subsubsection*{Order of Skills}
+
+	\begin{enumerate}
+		\item Techincal skills.
+		\item Accomplishments.
+		\item Top general employability skills.
+		\item Certifications or licenses.
+		\item List of computer skills, eg. Word, Excel.
+	\end{enumerate}
+
+	\subsubsection*{Section Requirements}
+	Includes technical skills and knowledge from the applicant's program, followed by a brief list of their general employablility skills. 
+	List must be a maximum 5-6 bullets; if more than 6 bullets, break list into sections. 
+	Ensure that technical and softskills are separated.
+
+	\subsection{Education}
+    	\label{sec:education} % This creates a label for reference
+	It is important to list any academic achievements i.e Honour Roll, Dean's List, awards or Scholarships. It may not be needed to note Highschool.
+
+	\subsubsection*{Section Requirements}
+	Applicant's program at Humber is first. Entry follows the structure and format of Humber's examples with accurate program name (see \hyperref[sec:factsheet]{Program Factsheet}); Years of study or Date of Graduation is apparent.
+
+	\subsection{Work Experience}
+    	\label{sec:workExp} % This creates a label for reference
+	Typically list work experience, Humber reccomends to list all work and volunteer work.
+	Keep important of softskills in decending order starting with the most recent and important
+	Be aware of past and present tense.
+
+	\subsubsection*{Section Requirements}
+	Position titles, organization, location and dates included per the sample provided. Bullets begin with strong action verbs, are in correct tense, and listed in order of importance; Bold face title/company name; Accomplishments are included; Jobs listed in \emph{reverse chronological order}.
+
+	\subsection{Optional}
+    	\label{sec:optionalResume} % This creates a label for reference
+	It's optional but avoid political or religious affiliations. Includes Volunteer Experience, Hobbies, Awards, achievements, etc.
+	This can include a list of programming projects.
+
+	\subsection{References}
+    	\label{sec:optionalRef} % This creates a label for reference
+	You do not need to include a reference "References Available Upon Request". If, you wish to include it then just use that phrase. It's suggested to have a list ready.
+
+	\section{Overall requirements}
+	Ensure that hyperlinksa re gret, and the font is legible and no less than 10px.
+	Each Heading starts with Capital Letters, is in bold, and is a larger font size than the following text. Use of fonts, bold etc are consistent; Dates and margins are aligned; 1 -2 pages maximum in length; Free of spelling and grammar errors.
+
+	\newpage
+	% ----------------------- PORTFOLIO
+	\section{Portfolio}
+	\label{sec:portfolio} % This creates a label for reference
+	A computer programmer's portfolio that acts as a collection of projects that showcase skills and experience, acting as a visual resume for potential employers. It needs to include a professional bio, contact information, a list of techincal skills, and links to code on platforms like \href{https://github.com}{Github}. 
+
+	\subsection*{Required Content}
+	\begin{outline}
+		\1[Contact Information:] Include email, phone-number, professional social media links.
+		\1[Bio/About Me:] Brief introduction.
+		\1[Skills:] List of technical skills.
+		\1[Projects:] Showcase of best projects.
+			\2 Have Variety.
+			\2 Make it Relevant.
+			\2 Make code accessible.
+		\1[Resume:] include downloadable resume.
+		\1[Testimonials:] consider including reccomendations from from employees, co-workers, or professors.
+	\end{outline}
+	\newpage
+	% ----------------------- Github README
+	\subsection*{Github Profile README}
+	There is github \href{https://docs.github.com/en/account-and-profile/how-tos/profile-customization/managing-your-profile-readme}{README} for profiles. 
+	\newpage
+	% ----------------------- LinkedIn README
+	\subsection*{LinkedIn README}
+	Work in progress; Requirements not yet specified.
+	\newpage
+	% ----------------------- References
+	\printbibliography
+\end{document}
