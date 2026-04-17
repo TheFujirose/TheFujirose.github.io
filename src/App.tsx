@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -6,15 +7,100 @@ import {
   Card,
   CardContent,
   Divider,
-  useMediaQuery,
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
   useTheme,
+  useMediaQuery,
 } from '@mui/material'
-import './App.css'
-import {Profile } from './components'
+import PersonIcon from '@mui/icons-material/Person'
+import BuildIcon from '@mui/icons-material/Build'
+import AssignmentIcon from '@mui/icons-material/Assignment'
+import EmailIcon from '@mui/icons-material/Email'
+import GetAppIcon from '@mui/icons-material/GetApp'
+import { Profile } from './components'
+import { useResponsive } from './hooks/useResponsive'
+
+/**
+ * NavTab type for navigation indexing
+ * 0: About, 1: Skills, 2: Projects, 3: Contact, 4: Resume
+ * Used for both sidebar and bottom navigation
+ */
+type NavTab = 0 | 1 | 2 | 3 | 4
 
 function App() {
   const theme = useTheme()
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  const isBelowMobile = useMediaQuery('(max-width: 359px)')
+  const [currentTab, setCurrentTab] = useState<NavTab>(0)
+
+  // Refs for each section to enable scrolling
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({
+    about: null,
+    skills: null,
+    projects: null,
+    contact: null,
+    resume: null,
+  })
+  const {
+    showSidebar,
+    showBottomNav,
+    showTopBar,
+    getPadding,
+    getMargin,
+    getGap,
+  } = useResponsive()
+
+  // Navigation items
+  const allNavItems = [
+    { icon: <PersonIcon />, label: 'About', key: 'about' },
+    { icon: <BuildIcon />, label: 'Skills', key: 'skills' },
+    { icon: <AssignmentIcon />, label: 'Projects', key: 'projects' },
+    { icon: <EmailIcon />, label: 'Contact', key: 'contact' },
+    { icon: <GetAppIcon />, label: 'Resume', key: 'resume' },
+  ]
+
+  const navItems = isBelowMobile ? allNavItems.filter(item => item.key !== 'skills') : allNavItems
+
+  // Handle scroll to section
+  const handleScrollToSection = (sectionKey: string, tabIndex: NavTab) => {
+    setCurrentTab(tabIndex)
+    const ref = sectionRefs.current[sectionKey as keyof typeof sectionRefs.current]
+    if (ref) {
+      ref.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  // Update current tab when scrolling (for tablet/desktop)
+  useEffect(() => {
+    if (showSidebar) {
+      const handleScroll = (e: Event) => {
+        const target = e.target as HTMLElement
+        const scrollPosition = target.scrollTop + 100
+
+        // Check which section is in view
+        const sections = Object.entries(sectionRefs.current)
+        for (let i = 0; i < sections.length; i++) {
+          const [_, ref] = sections[i]
+          if (ref) {
+            const nextRef = sections[i + 1]?.[1]
+            const refTop = ref.offsetTop
+            const refBottom = nextRef ? nextRef.offsetTop : refTop + ref.clientHeight
+
+            if (scrollPosition >= refTop && scrollPosition < refBottom) {
+              setCurrentTab(i as NavTab)
+              break
+            }
+          }
+        }
+      }
+
+      const mainContent = document.querySelector('main')
+      if (mainContent) {
+        mainContent.addEventListener('scroll', handleScroll)
+        return () => mainContent.removeEventListener('scroll', handleScroll)
+      }
+    }
+  }, [showSidebar])
 
   return (
     <Box
@@ -23,67 +109,142 @@ function App() {
         flexDirection: 'column',
         minHeight: '100vh',
         backgroundColor: theme.palette.background.default,
+        width: '100vw',
+        overflow: 'hidden',
+
       }}
     >
-      {/* App Bar */}
-      <AppBar position="static">
-        <Toolbar
+      {/* Desktop/Tablet Sidebar Navigation - Fixed Position */}
+      {showSidebar && (
+        <Box
           sx={{
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            width: { md: 280, xl: 320 },
+            height: '100vh',
+            backgroundColor: theme.palette.background.paper,
+            borderRight: `1px solid ${theme.palette.divider}`,
+            overflowY: 'auto',
+            overflowX: 'hidden',
             display: 'flex',
-            justifyContent: 'space-between',
+            flexDirection: 'column',
             alignItems: 'center',
-            pt: 3,
-            pb: 3,
+            py: 3,
+            px: 2,
+            gap: 2,
+            zIndex: 999,
           }}
         >
           <Typography
             sx={{
-              flex: 1,
-              textAlign: 'center',
               fontSize: '22px',
               fontWeight: 400,
               color: theme.palette.text.primary,
+              mb: 2,
             }}
           >
             Portfolio
           </Typography>
-          <Box sx={{ width: 48 }} />
-        </Toolbar>
-      </AppBar>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+            {navItems.map((item, idx) => (
+              <Box
+                key={idx}
+                onClick={() => handleScrollToSection(item.key, idx as NavTab)}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 2,
+                  p: 1.5,
+                  borderRadius: 1,
+                  cursor: 'pointer',
+                  backgroundColor: currentTab === idx ? theme.palette.action.hover : 'transparent',
+                  color: currentTab === idx ? theme.palette.primary.main : theme.palette.text.secondary,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    backgroundColor: theme.palette.action.hover,
+                  },
+                }}
+              >
+                {item.icon}
+                <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>
+                  {item.label}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
 
-      {/* Main Layout */}
+      {/* Main Content Area */}
       <Box
         sx={{
           display: 'flex',
+          flexDirection: 'column',
           flex: 1,
           overflow: 'hidden',
+          width: '100%',
+          // Sidebar is fixed and removed from flow, so main content fills normally
+          // Content inside will be positioned to avoid sidebar overlap via padding
         }}
       >
-        {/* Main Content */}
+        {/* App Bar (Mobile and Tablet Portrait) */}
+        {showTopBar && (
+          <AppBar position="static">
+            <Toolbar
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                pt: 2,
+                pb: 2,
+              }}
+            >
+              <Typography variant='h1'
+                sx={{
+                  color: theme.palette.text.primary,
+                }}
+              >
+                Portfolio
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        )}
+
+        {/* Content Container */}
         <Box
           component="main"
           sx={{
             flex: 1,
             display: 'flex',
             flexDirection: 'column',
-            gap: 1.875,
+            gap: getGap(),
             overflow: 'auto',
-            px: isDesktop ? 2 : 1,
-            py: 1.875,
-            pb: isDesktop ? 10 : 10,
+            py: getPadding(),
+            pl: showSidebar ? { md: '280px', xl: '320px' } : getPadding(),
+            pr: getPadding(),
+            mx: getMargin(),
+            pb: showBottomNav ? 15 : getPadding() * 4,
+            maxWidth: 'none',
+            width: '100%',
           }}
         >
           {/* Profile Section */}
           <Card
+            ref={(el) => {
+              if (el) sectionRefs.current.about = el
+            }}
             sx={{
               backgroundColor: theme.palette.background.paper,
               mx: 'auto',
               width: '100%',
-              maxWidth: isDesktop ? '100%' : '375px',
+              scrollMarginTop: showTopBar ? '64px' : '0px',
             }}
           >
-            <CardContent sx={{ p: 2 }}>
-              <Profile size={isDesktop ? 'Horizontal' : 'Vertical'} />
+            <CardContent>
+              <Profile
+                size={showSidebar ? 'Horizontal' : 'Vertical'}
+              />
 
               {/* Divider */}
               <Divider sx={{ my: 2 }} />
@@ -100,8 +261,121 @@ function App() {
               </Typography>
             </CardContent>
           </Card>
+
+          {/* Skills Section */}
+          <Card
+            ref={(el) => {
+              if (el) sectionRefs.current.skills = el
+            }}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              scrollMarginTop: showTopBar ? '64px' : '0px',
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">
+                Skills
+              </Typography>
+              <Typography variant="body2">
+                Skills content coming soon
+              </Typography>
+            </CardContent>
+          </Card>
+
+          {/* Projects Section */}
+          <Card
+            ref={(el) => {
+              if (el) sectionRefs.current.projects = el
+            }}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              scrollMarginTop: showTopBar ? '64px' : '0px',
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">
+                Projects
+              </Typography>
+              <Typography variant="body2">
+                Projects content coming soon
+              </Typography>
+            </CardContent>
+          </Card>
+
+          {/* Contact Section */}
+          <Card
+            ref={(el) => {
+              if (el) sectionRefs.current.contact = el
+            }}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              scrollMarginTop: showTopBar ? '64px' : '0px',
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">
+                Contact
+              </Typography>
+              <Typography variant="body2">
+                Contact content coming soon
+              </Typography>
+            </CardContent>
+          </Card>
+
+          {/* Resume Section */}
+          <Card
+            ref={(el) => {
+              if (el) sectionRefs.current.resume = el
+            }}
+            sx={{
+              backgroundColor: theme.palette.background.paper,
+              scrollMarginTop: showTopBar ? '64px' : '0px',
+            }}
+          >
+            <CardContent>
+              <Typography variant="h6">
+                Resume
+              </Typography>
+              <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                Resume content coming soon
+              </Typography>
+            </CardContent>
+          </Card>
         </Box>
       </Box>
+
+      {/* Bottom Navigation (Mobile only) */}
+      {showBottomNav && (
+        <Paper
+          sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1000}}
+          elevation={3}
+        >
+          <BottomNavigation
+            value={currentTab}
+            onChange={(_, newValue) =>
+              handleScrollToSection(navItems[newValue as NavTab].key, newValue as NavTab)
+            }
+            sx={{ backgroundColor: theme.palette.background.paper }}
+          >
+            {navItems.map((item, idx) => (
+              <BottomNavigationAction
+                key={idx}
+                icon={item.icon}
+                label={item.label}
+                sx={{
+                  fontSize: '12px',
+                  color: theme.palette.text.secondary,
+                  px: { xs: 0.75, sm: 1 }, // Reduce horizontal padding on mobile
+                  //fixes issues for mobile devices at 360px
+                  '&.Mui-selected': {
+                    color: theme.palette.primary.main,
+                  },
+                }}
+              />
+            ))}
+          </BottomNavigation>
+        </Paper>
+      )}
     </Box>
   )
 }

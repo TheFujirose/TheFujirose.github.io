@@ -1,3 +1,4 @@
+import { ThemeContext } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -20,7 +21,7 @@ export const theme = createTheme({
       disabledBackground: '#ece6f0',
     },
   },
-  typography: {
+  typography: (palette) => ({
     fontFamily: 'Roboto, sans-serif',
     h1: {
       fontSize: '22px',
@@ -32,6 +33,9 @@ export const theme = createTheme({
       fontWeight: 400,
       lineHeight: '32px',
     },
+    h6: {
+      marginBottom: '8px',
+    },
     body1: {
       fontSize: '16px',
       fontWeight: 400,
@@ -41,8 +45,9 @@ export const theme = createTheme({
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '20px',
+      color: palette.text.secondary
     },
-  },
+  }),
   components: {
     MuiAppBar: {
       styleOverrides: {
@@ -59,6 +64,25 @@ export const theme = createTheme({
         root: {
           borderRadius: '12px',
           boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px rgba(0,0,0,0.15)',
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: '16px',
+          '@media (min-width: 600px)': {
+            padding: '20px',
+          },
+          '@media (min-width: 960px)': {
+            padding: '24px',
+          },
+          '@media (min-width: 1280px)': {
+            padding: '24px',
+          },
+          '&:last-child': {
+            paddingBottom: '24px',
+          },
         },
       },
     },
