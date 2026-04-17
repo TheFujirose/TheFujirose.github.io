@@ -22,19 +22,11 @@ function App() {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        backgroundColor: '#ffffff',
+        backgroundColor: theme.palette.background.default,
       }}
     >
       {/* App Bar */}
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: '#ffffff',
-          color: '#1d1b20',
-          boxShadow: 'none',
-          borderBottom: '1px solid #e0e0e0',
-        }}
-      >
+      <AppBar position="static">
         <Toolbar
           sx={{
             display: 'flex',
@@ -50,7 +42,7 @@ function App() {
               textAlign: 'center',
               fontSize: '22px',
               fontWeight: 400,
-              color: '#1d1b20',
+              color: theme.palette.text.primary,
             }}
           >
             Portfolio
@@ -84,9 +76,7 @@ function App() {
           {/* Profile Section */}
           <Card
             sx={{
-              backgroundColor: '#fef7ff',
-              borderRadius: 1.5,
-              boxShadow: '0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px rgba(0,0,0,0.15)',
+              backgroundColor: theme.palette.background.paper,
               mx: 'auto',
               width: '100%',
               maxWidth: isDesktop ? '100%' : '375px',
@@ -102,10 +92,7 @@ function App() {
               <Typography
                 variant="body2"
                 sx={{
-                  fontSize: '14px',
-                  fontWeight: 400,
-                  color: '#1d1b20',
-                  lineHeight: '20px',
+                  color: theme.palette.text.primary,
                   textAlign: 'justify',
                 }}
               >
