@@ -362,7 +362,7 @@ function App() {
               </Typography>
               <Typography variant="body2">
                 <Icon component={EmailIcon} sx={{ verticalAlign: 'middle', mr: 0.5 }} />
-                <a href='mailto:carson.fujita@gmail.com'>carson.fujita@gmail.com</a>
+                <a href='mailto:carsonfujita@gmail.com'>carsonfujita@gmail.com</a>
               </Typography>
             </CardContent>
           </Card>
