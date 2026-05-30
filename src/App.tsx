@@ -31,7 +31,7 @@ import { useResponsive } from './hooks/useResponsive'
 // Importing images
 import quizImg from './assets/images/website.jpg'
 import loonEImg from './assets/images/loon-e.jpg'
-
+import humberASVImg from './assets/images/humberasvwebsite.jpg'
 /**
  * NavTab type for navigation indexing
  * 0: About, 1: Skills, 2: Projects, 3: Contact, 4: Resume
