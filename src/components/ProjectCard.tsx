@@ -7,6 +7,10 @@ interface ProjectCardProps {
   description?: string;
   skills?: string[];
   imageUrl?: string;
+  primaryLink?: string;
+  primaryLinkLabel?: string;
+  secondaryLink?: string;
+  secondaryLinkLabel?: string;
 }
 
 export const ProjectCard = ({
@@ -15,6 +19,10 @@ export const ProjectCard = ({
   description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
   skills = [],
   imageUrl = 'http://localhost:3845/assets/054dfe02e425078fdd66113858fbed2e929f9c10.png',
+  primaryLink = '#',
+  primaryLinkLabel = 'Primary Link',
+  secondaryLink = '#',
+  secondaryLinkLabel = 'Secondary Link',
 }: ProjectCardProps) => {
   const theme = useTheme()
 
@@ -89,9 +97,14 @@ export const ProjectCard = ({
           </Stack>
 
           <Stack direction="row" spacing={1} justifyContent="flex-end">
-            <Button variant="outlined">Secondary</Button>
+            <Button variant="outlined"
+              href={secondaryLink}
+            >
+              {secondaryLinkLabel}
+            </Button>
             <Button
               variant="contained"
+              href={primaryLink}
               sx={{
                 backgroundColor: theme.palette.primary.main,
                 color: '#ffffff',
@@ -100,7 +113,7 @@ export const ProjectCard = ({
                 },
               }}
             >
-              Primary
+              {primaryLinkLabel}
             </Button>
           </Stack>
         </Box>

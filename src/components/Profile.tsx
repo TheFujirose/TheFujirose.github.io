@@ -1,4 +1,5 @@
 import { Box, Typography, Avatar, useTheme } from '@mui/material';
+import carsonImg from '../assets/images/Carson Fujita.jpg' 
 
 interface ProfileProps {
   size?: 'Horizontal' | 'Vertical';
@@ -12,6 +13,7 @@ export const Profile = ({
   size = 'Horizontal',
   name = 'Carson Fujita',
   title = 'Computer Programmer',
+  imageUrl = carsonImg,
 }: ProfileProps) => {
   const theme = useTheme()
   const imageSize = size === 'Vertical' ? 327 : 136;
@@ -26,6 +28,7 @@ export const Profile = ({
       }}
     >
       <Avatar
+        src={imageUrl}
         sx={{
           width: imageSize,
           height: imageSize,
@@ -75,7 +78,7 @@ export const Profile = ({
             color: theme.palette.text.primary,
           }}
         >
-          <a href='https://youtube.com/shorts/8l5D6i6iLpA?feature=share' target='blank'>See Prototype</a>
+          <a href='https://youtube.com/shorts/8l5D6i6iLpA?feature=share' target='blank'>See Portfolio Prototype</a>
         </Typography>
       </Box>
     </Box>

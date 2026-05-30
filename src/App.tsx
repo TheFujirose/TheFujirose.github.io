@@ -12,14 +12,25 @@ import {
   Paper,
   useTheme,
   useMediaQuery,
+  Icon,
 } from '@mui/material'
+
+// Importing icons
 import PersonIcon from '@mui/icons-material/Person'
 import BuildIcon from '@mui/icons-material/Build'
 import AssignmentIcon from '@mui/icons-material/Assignment'
 import EmailIcon from '@mui/icons-material/Email'
 import GetAppIcon from '@mui/icons-material/GetApp'
-import { Profile } from './components'
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+
+// Importing custom components and hooks
+import { Profile, ProjectCard, Skill } from './components'
 import { useResponsive } from './hooks/useResponsive'
+
+
+// Importing images
+import quizImg from './assets/images/website.jpg'
+import loonEImg from './assets/images/loon-e.jpg'
 
 /**
  * NavTab type for navigation indexing
@@ -242,6 +253,7 @@ function App() {
             }}
           >
             <CardContent>
+              {/* Images and content is in the component */}
               <Profile
                 size={showSidebar ? 'Horizontal' : 'Vertical'}
               />
@@ -257,28 +269,35 @@ function App() {
                   textAlign: 'justify',
                 }}
               >
-                Portfolio under development.
+                I'm Carson, I'm a computer programmer with a passion for robotics and software architecture. 
+                I have experience in full stack development, and 
+                I'm always eager to learn new technologies and 
+                take on challenging projects; checkout my clubs project 
+                <a href='https://humberasv.ca/'> Loon-E</a>, an autonomous surface vehicle!
               </Typography>
+
+              
             </CardContent>
-          </Card>
 
           {/* Skills Section */}
-          <Card
-            ref={(el) => {
-              if (el) sectionRefs.current.skills = el
-            }}
-            sx={{
-              backgroundColor: theme.palette.background.paper,
-              scrollMarginTop: showTopBar ? '64px' : '0px',
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6">
-                Skills
-              </Typography>
-              <Typography variant="body2">
-                Skills content coming soon
-              </Typography>
+            
+            <CardContent 
+              ref={(el) => {
+                if (el) sectionRefs.current.skills = el
+              }}
+              sx={{
+                backgroundColor: theme.palette.background.paper,
+                scrollMarginTop: showTopBar ? '64px' : '0px',
+              }}
+              >
+              <Box
+               sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+                <Skill label="JavaScript" />
+                <Skill label="TypeScript" />
+                <Skill label="React" />
+                <Skill label="Python" />
+                <Skill label="Robotics" />
+              </Box>
             </CardContent>
           </Card>
 
@@ -296,9 +315,30 @@ function App() {
               <Typography variant="h6">
                 Projects
               </Typography>
-              <Typography variant="body2">
-                Projects content coming soon
-              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 2, mt: 1 }}>
+                <ProjectCard
+                  title="Loon-E ASV"
+                  subtitle="Humber College Robotics Club"
+                  description="An autonomous surface vehicle designed for research and competition. I contributed to the software architecture, navigation algorithms, and sensor integration."
+                  skills={['Python', 'ROS', 'Docker']}
+                  imageUrl={loonEImg}
+                  primaryLink='https://humberasv.ca/'
+                  primaryLinkLabel='View Project'
+                  secondaryLink='https://github.com/HumberASV/'
+                  secondaryLinkLabel='View Github'
+                />
+                  <ProjectCard
+                  title="Quick Quiz Website"
+                  subtitle="Assignment with no framework"
+                  description="A quiz website built with vanilla JavaScript, HTML, and CSS."
+                  skills={['JavaScript', 'HTML', 'CSS']}
+                  imageUrl={quizImg}
+                  primaryLink='https://cfujitahumber.github.io/JavaScript/quick-quiz.html'
+                  primaryLinkLabel='View Project'
+                  secondaryLink='https://github.com/CFujitaHumber/CFujitaHumber.github.io'
+                  secondaryLinkLabel='View Github'
+                />
+              </Box>
             </CardContent>
           </Card>
 
@@ -317,7 +357,12 @@ function App() {
                 Contact
               </Typography>
               <Typography variant="body2">
-                Contact content coming soon
+                <Icon component={LinkedInIcon} sx={{ verticalAlign: 'middle', mr: 0.5 }} />
+                <a href='https://www.linkedin.com/in/carson-fujita/' target='blank'>LinkedIn</a>
+              </Typography>
+              <Typography variant="body2">
+                <Icon component={EmailIcon} sx={{ verticalAlign: 'middle', mr: 0.5 }} />
+                <a href='mailto:carson.fujita@gmail.com'>carson.fujita@gmail.com</a>
               </Typography>
             </CardContent>
           </Card>
