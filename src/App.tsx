@@ -272,7 +272,7 @@ function App() {
                 I'm Carson, I'm a computer programmer with a passion for robotics and software architecture. 
                 I have experience in full stack development, and 
                 I'm always eager to learn new technologies and 
-                take on challenging projects; checkout my clubs project 
+                take on challenging projects; checkout my club's project: 
                 <a href='https://humberasv.ca/'> Loon-E</a>, an autonomous surface vehicle!
               </Typography>
 
@@ -297,6 +297,11 @@ function App() {
                 <Skill label="React" />
                 <Skill label="Python" />
                 <Skill label="Robotics" />
+                <Skill label="ROS" />
+                <Skill label="Docker" />
+                <Skill label="Git" />
+                <Skill label="SQL" />
+                <Skill label="NoSQL" />
               </Box>
             </CardContent>
           </Card>
@@ -336,6 +341,17 @@ function App() {
                   primaryLink='https://cfujitahumber.github.io/JavaScript/quick-quiz.html'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/CFujitaHumber/CFujitaHumber.github.io'
+                  secondaryLinkLabel='View Github'
+                />
+                <ProjectCard
+                  title="HumberASV.ca"
+                  subtitle="Maintainer of the club website"
+                  description="The website for the Humber College Robotics Club, built with React and hosted on GitHub Pages. I maintain the site, add new features, and ensure it stays up to date with our latest projects and news."
+                  skills={['Vite', 'React', 'GitHub Pages']}
+                  imageUrl={humberASVImg}
+                  primaryLink='https://humberasv.ca/'
+                  primaryLinkLabel='View Project'
+                  secondaryLink='https://github.com/HumberASV/HumberASV-Website'
                   secondaryLinkLabel='View Github'
                 />
               </Box>
