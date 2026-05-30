@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Typography, Button, Stack } from '@mui/material';
+import { Box, Card, CardContent, Typography, Button, Stack, useTheme } from '@mui/material';
 import { Skill } from './Skill';
 
 interface ProjectCardProps {
@@ -7,6 +7,10 @@ interface ProjectCardProps {
   description?: string;
   skills?: string[];
   imageUrl?: string;
+  primaryLink?: string;
+  primaryLinkLabel?: string;
+  secondaryLink?: string;
+  secondaryLinkLabel?: string;
 }
 
 export const ProjectCard = ({
@@ -15,11 +19,16 @@ export const ProjectCard = ({
   description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
   skills = [],
   imageUrl = 'http://localhost:3845/assets/054dfe02e425078fdd66113858fbed2e929f9c10.png',
+  primaryLink = '#',
+  primaryLinkLabel = 'Primary Link',
+  secondaryLink = '#',
+  secondaryLinkLabel = 'Secondary Link',
 }: ProjectCardProps) => {
+  const theme = useTheme()
+
   return (
     <Card
       sx={{
-        borderRadius: 1.5,
         backgroundColor: '#f7f2fa',
         boxShadow: 'none',
         width: '100%',
@@ -34,7 +43,7 @@ export const ProjectCard = ({
           width: '100%',
           height: '188px',
           objectFit: 'cover',
-          backgroundColor: '#ece6f0',
+          backgroundColor: theme.palette.action.disabledBackground,
         }}
       />
       <CardContent
@@ -51,7 +60,7 @@ export const ProjectCard = ({
             sx={{
               fontWeight: 400,
               fontSize: '16px',
-              color: '#1d1b20',
+              color: theme.palette.text.primary,
               mb: 0.5,
             }}
           >
@@ -62,7 +71,7 @@ export const ProjectCard = ({
             sx={{
               fontWeight: 400,
               fontSize: '14px',
-              color: '#49454f',
+              color: theme.palette.text.secondary,
             }}
           >
             {subtitle}
@@ -74,7 +83,7 @@ export const ProjectCard = ({
           sx={{
             fontWeight: 400,
             fontSize: '14px',
-            color: '#49454f',
+            color: theme.palette.text.secondary,
           }}
         >
           {description}
@@ -88,35 +97,23 @@ export const ProjectCard = ({
           </Stack>
 
           <Stack direction="row" spacing={1} justifyContent="flex-end">
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: '#cac4d0',
-                color: '#49454f',
-                textTransform: 'none',
-                fontSize: '14px',
-                borderRadius: '100px',
-                '&:hover': {
-                  backgroundColor: 'rgba(0,0,0,0.04)',
-                },
-              }}
+            <Button variant="outlined"
+              href={secondaryLink}
             >
-              Secondary
+              {secondaryLinkLabel}
             </Button>
             <Button
               variant="contained"
+              href={primaryLink}
               sx={{
-                backgroundColor: '#6750a4',
+                backgroundColor: theme.palette.primary.main,
                 color: '#ffffff',
-                textTransform: 'none',
-                fontSize: '14px',
-                borderRadius: '100px',
                 '&:hover': {
-                  backgroundColor: '#5a47a0',
+                  backgroundColor: theme.palette.primary.dark,
                 },
               }}
             >
-              Primary
+              {primaryLinkLabel}
             </Button>
           </Stack>
         </Box>

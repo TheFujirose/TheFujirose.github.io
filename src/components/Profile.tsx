@@ -1,4 +1,5 @@
-import { Box, Typography, Avatar } from '@mui/material';
+import { Box, Typography, Avatar, useTheme } from '@mui/material';
+import carsonImg from '../assets/images/Carson Fujita.jpg' 
 
 interface ProfileProps {
   size?: 'Horizontal' | 'Vertical';
@@ -12,7 +13,9 @@ export const Profile = ({
   size = 'Horizontal',
   name = 'Carson Fujita',
   title = 'Computer Programmer',
+  imageUrl = carsonImg,
 }: ProfileProps) => {
+  const theme = useTheme()
   const imageSize = size === 'Vertical' ? 327 : 136;
 
   return (
@@ -25,6 +28,7 @@ export const Profile = ({
       }}
     >
       <Avatar
+        src={imageUrl}
         sx={{
           width: imageSize,
           height: imageSize,
@@ -47,7 +51,7 @@ export const Profile = ({
               fontSize: size === 'Vertical' ? '24px' : '24px',
               fontWeight: 400,
               lineHeight: size === 'Vertical' ? '32px' : '32px',
-              color: '#1d1b20',
+              color: theme.palette.text.primary,
               mb: 0.5,
             }}
           >
@@ -58,7 +62,7 @@ export const Profile = ({
               fontSize: '16px',
               fontWeight: 500,
               lineHeight: '24px',
-              color: '#49454f',
+              color: theme.palette.text.secondary,
             }}
           >
             {title}
@@ -71,10 +75,10 @@ export const Profile = ({
             fontSize: '14px',
             fontWeight: 400,
             lineHeight: '20px',
-            color: '#1d1b20',
+            color: theme.palette.text.primary,
           }}
         >
-          <a href='https://youtube.com/shorts/8l5D6i6iLpA?feature=share' target='blank'>See Prototype</a>
+          <a href='https://youtube.com/shorts/8l5D6i6iLpA?feature=share' target='blank'>See Portfolio Prototype</a>
         </Typography>
       </Box>
     </Box>

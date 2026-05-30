@@ -1,10 +1,12 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 
 interface SkillProps {
   label?: string;
 }
 
 export const Skill = ({ label = 'Skill' }: SkillProps) => {
+  const theme = useTheme()
+
   return (
     <Box
       sx={{
@@ -24,7 +26,7 @@ export const Skill = ({ label = 'Skill' }: SkillProps) => {
           fontSize: '14px',
           fontWeight: 500,
           letterSpacing: '0.1px',
-          color: '#49454f',
+          color: theme.palette.text.secondary,
         }}
       >
         {label}
