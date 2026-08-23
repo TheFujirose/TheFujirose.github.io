@@ -1,4 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { 
+  useState,
+  useRef,
+  useEffect,
+  Fragment,
+} from 'react'
 import {
   AppBar,
   Toolbar,
@@ -13,6 +18,9 @@ import {
   useTheme,
   useMediaQuery,
   Icon,
+  Snackbar,
+  type SnackbarCloseReason,
+  Button,
 } from '@mui/material'
 
 // Importing icons
@@ -22,9 +30,16 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import EmailIcon from '@mui/icons-material/Email'
 import GetAppIcon from '@mui/icons-material/GetApp'
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // Importing custom components and hooks
-import { Profile, ProjectCard, Skill } from './components'
+import { 
+  Profile,
+  ProjectCard,
+  Skill,
+  VideoPlayer,
+} from './components'
 import { useResponsive } from './hooks/useResponsive'
 
 
@@ -43,6 +58,7 @@ function App() {
   const theme = useTheme()
   const isBelowMobile = useMediaQuery('(max-width: 359px)')
   const [currentTab, setCurrentTab] = useState<NavTab>(0)
+  const [hasDownloadPressed, setHasDownloadPressed] = useState(false);
 
   // Refs for each section to enable scrolling
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({
@@ -80,6 +96,50 @@ function App() {
       ref.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
+
+  // handle download resume button
+  const handleDownload = () => {
+    const fileUrl = 'public/resume.pdf';
+    const fileName = 'carson_fujita_resume.pdf';
+
+    const anchor = document.createElement('a');
+    anchor.href = fileUrl;
+    anchor.download = fileName;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor); //clean dom
+    setHasDownloadPressed(true);
+  };
+
+  const handleClose = (
+    _ : React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway'){
+      return;
+    }
+    setHasDownloadPressed(false);
+  };
+  
+  const action = (
+    <Fragment>
+      <Button 
+      aria-label='retry'
+      onClick={handleDownload}
+      >
+        Retry
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  )
 
   // Update current tab when scrolling (for tablet/desktop)
   useEffect(() => {
@@ -326,7 +386,12 @@ function App() {
                   subtitle="Humber College Robotics Club"
                   description="An autonomous surface vehicle designed for research and competition. I contributed to the software architecture, navigation algorithms, and sensor integration."
                   skills={['Python', 'ROS', 'Docker']}
-                  imageUrl={loonEImg}
+                  media={
+                  <VideoPlayer
+                    videoId="Ocej88hrU2k"
+                    mediaOnFail={<img src={loonEImg} alt="The Loon-E autonomous surface vehicle" />}
+                  />
+                  }
                   primaryLink='https://humberasv.ca/'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/HumberASV/'
@@ -337,7 +402,7 @@ function App() {
                   subtitle="Assignment with no framework"
                   description="A quiz website built with vanilla JavaScript, HTML, and CSS."
                   skills={['JavaScript', 'HTML', 'CSS']}
-                  imageUrl={quizImg}
+                  media={<img src={quizImg} alt="Screenshot of the Quick Quiz website" />}
                   primaryLink='https://cfujitahumber.github.io/JavaScript/quick-quiz.html'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/CFujitaHumber/CFujitaHumber.github.io'
@@ -348,7 +413,7 @@ function App() {
                   subtitle="Maintainer of the club website"
                   description="The website for the Humber College Robotics Club, built with React and hosted on GitHub Pages. I maintain the site, add new features, and ensure it stays up to date with our latest projects and news."
                   skills={['Vite', 'React', 'GitHub Pages']}
-                  imageUrl={humberASVImg}
+                  media={<img src={humberASVImg} alt="Screenshot of the HumberASV.ca homepage" />}
                   primaryLink='https://humberasv.ca/'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/HumberASV/HumberASV-Website'
@@ -398,8 +463,21 @@ function App() {
                 Resume
               </Typography>
               <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                Resume content coming soon
+                Download the resume to view today!
               </Typography>
+              <Button 
+                sx={{
+                  mt: "1rem",
+                  backgroundColor: theme.palette.primary.main,
+                  color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                  },
+                }} 
+                onClick={handleDownload}
+              >
+                Download
+              </Button>
             </CardContent>
           </Card>
         </Box>
@@ -437,6 +515,13 @@ function App() {
           </BottomNavigation>
         </Paper>
       )}
+    <Snackbar
+      open={hasDownloadPressed}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      message="Download started!"
+      action={action}
+    />
     </Box>
   )
 }
