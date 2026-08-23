@@ -99,7 +99,7 @@ function App() {
 
   // handle download resume button
   const handleDownload = () => {
-    const fileUrl = 'public/resume.pdf';
+    const fileUrl = `${import.meta.env.BASE_URL}resume.pdf`;
     const fileName = 'carson_fujita_resume.pdf';
 
     const anchor = document.createElement('a');
