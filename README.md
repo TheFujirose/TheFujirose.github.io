@@ -1,6 +1,8 @@
 # Portfolio
 
-> ![Portfolio](https://img.shields.io/badge/Portfolio-React-blue)  ![License](https://img.shields.io/badge/License-MIT-green) ![Last%20Updated](https://img.shields.io/badge/Last%20Updated-2026--05--30-blue)
+> ![Portfolio](https://img.shields.io/badge/Portfolio-React-blue)  ![License](https://img.shields.io/badge/License-MIT-green) ![Last%20Updated](https://img.shields.io/badge/Last%20Updated-2026--08--23-blue)
+
+Click [Here](https://thefujirose.github.io/) to go to website.
 
 # Tech Stack
 
