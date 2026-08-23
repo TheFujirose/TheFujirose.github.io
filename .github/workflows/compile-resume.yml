@@ -1,0 +1,43 @@
+name: Compile LaTeX Document
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'documents/resume/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'documents/resume/**' ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      - name: Compile PDF using TeX Live
+        uses: xu-cheng/texlive-action@v3
+        with:
+          run: |
+            latexmk -pdf -file-line-error -halt-on-error \
+              -interaction=nonstopmode -outdir=build \
+              documents/resume/resume.tex
+            cp build/resume.pdf public/resume.pdf
+
+      - name: Upload Compiled PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-document
+          path: public/resume.pdf
+
+      - name: Commit updated PDF
+        if: github.event_name == 'push'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/resume.pdf
+          git diff --staged --quiet || git commit -m "chore: rebuild resume.pdf"
+          git push

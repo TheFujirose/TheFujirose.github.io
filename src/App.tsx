@@ -1,4 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { 
+  useState,
+  useRef,
+  useEffect,
+  Fragment,
+} from 'react'
 import {
   AppBar,
   Toolbar,
@@ -13,6 +18,9 @@ import {
   useTheme,
   useMediaQuery,
   Icon,
+  Snackbar,
+  type SnackbarCloseReason,
+  Button,
 } from '@mui/material'
 
 // Importing icons
@@ -22,6 +30,8 @@ import AssignmentIcon from '@mui/icons-material/Assignment'
 import EmailIcon from '@mui/icons-material/Email'
 import GetAppIcon from '@mui/icons-material/GetApp'
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // Importing custom components and hooks
 import { Profile, ProjectCard, Skill } from './components'
@@ -43,6 +53,7 @@ function App() {
   const theme = useTheme()
   const isBelowMobile = useMediaQuery('(max-width: 359px)')
   const [currentTab, setCurrentTab] = useState<NavTab>(0)
+  const [hasDownloadPressed, setHasDownloadPressed] = useState(false);
 
   // Refs for each section to enable scrolling
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({
@@ -80,6 +91,50 @@ function App() {
       ref.scrollIntoView({ behavior: 'smooth', block: 'start' })
     }
   }
+
+  // handle download resume button
+  const handleDownload = () => {
+    const fileUrl = 'public/resume.pdf';
+    const fileName = 'carson_fujita_resume.pdf';
+
+    const anchor = document.createElement('a');
+    anchor.href = fileUrl;
+    anchor.download = fileName;
+
+    document.body.appendChild(anchor);
+    anchor.click();
+    document.body.removeChild(anchor); //clean dom
+    setHasDownloadPressed(true);
+  };
+
+  const handleClose = (
+    _ : React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway'){
+      return;
+    }
+    setHasDownloadPressed(false);
+  };
+  
+  const action = (
+    <Fragment>
+      <Button 
+      aria-label='retry'
+      onClick={handleDownload}
+      >
+        Retry
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  )
 
   // Update current tab when scrolling (for tablet/desktop)
   useEffect(() => {
@@ -398,8 +453,21 @@ function App() {
                 Resume
               </Typography>
               <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                Resume content coming soon
+                Download the resume to view today!
               </Typography>
+              <Button 
+                sx={{
+                  mt: "1rem",
+                  backgroundColor: theme.palette.primary.main,
+                  color: '#ffffff',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                  },
+                }} 
+                onClick={handleDownload}
+              >
+                Download
+              </Button>
             </CardContent>
           </Card>
         </Box>
@@ -437,6 +505,13 @@ function App() {
           </BottomNavigation>
         </Paper>
       )}
+    <Snackbar
+      open={hasDownloadPressed}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      message="Download started!"
+      action={action}
+    />
     </Box>
   )
 }
