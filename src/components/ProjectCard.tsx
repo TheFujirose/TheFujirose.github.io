@@ -1,4 +1,5 @@
 import { Box, Card, CardContent, Typography, Button, Stack, useTheme } from '@mui/material';
+import type { ReactNode } from 'react';
 import { Skill } from './Skill';
 
 interface ProjectCardProps {
@@ -6,7 +7,7 @@ interface ProjectCardProps {
   subtitle?: string;
   description?: string;
   skills?: string[];
-  imageUrl?: string;
+  media?: ReactNode;
   primaryLink?: string;
   primaryLinkLabel?: string;
   secondaryLink?: string;
@@ -18,7 +19,7 @@ export const ProjectCard = ({
   subtitle = 'Subtitle',
   description = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor',
   skills = [],
-  imageUrl = 'http://localhost:3845/assets/054dfe02e425078fdd66113858fbed2e929f9c10.png',
+  media,
   primaryLink = '#',
   primaryLinkLabel = 'Primary Link',
   secondaryLink = '#',
@@ -36,16 +37,21 @@ export const ProjectCard = ({
       }}
     >
       <Box
-        component="img"
-        src={imageUrl}
-        alt={title}
         sx={{
           width: '100%',
           height: '188px',
-          objectFit: 'cover',
+          overflow: 'hidden',
           backgroundColor: theme.palette.action.disabledBackground,
+          '& > *': {
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          },
         }}
-      />
+      >
+        {media}
+      </Box>
       <CardContent
         sx={{
           display: 'flex',

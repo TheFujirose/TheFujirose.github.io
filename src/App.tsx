@@ -34,7 +34,12 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 // Importing custom components and hooks
-import { Profile, ProjectCard, Skill } from './components'
+import { 
+  Profile,
+  ProjectCard,
+  Skill,
+  VideoPlayer,
+} from './components'
 import { useResponsive } from './hooks/useResponsive'
 
 
@@ -381,7 +386,12 @@ function App() {
                   subtitle="Humber College Robotics Club"
                   description="An autonomous surface vehicle designed for research and competition. I contributed to the software architecture, navigation algorithms, and sensor integration."
                   skills={['Python', 'ROS', 'Docker']}
-                  imageUrl={loonEImg}
+                  media={
+                  <VideoPlayer
+                    videoId="Ocej88hrU2k"
+                    mediaOnFail={<img src={loonEImg} alt="The Loon-E autonomous surface vehicle" />}
+                  />
+                  }
                   primaryLink='https://humberasv.ca/'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/HumberASV/'
@@ -392,7 +402,7 @@ function App() {
                   subtitle="Assignment with no framework"
                   description="A quiz website built with vanilla JavaScript, HTML, and CSS."
                   skills={['JavaScript', 'HTML', 'CSS']}
-                  imageUrl={quizImg}
+                  media={<img src={quizImg} alt="Screenshot of the Quick Quiz website" />}
                   primaryLink='https://cfujitahumber.github.io/JavaScript/quick-quiz.html'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/CFujitaHumber/CFujitaHumber.github.io'
@@ -403,7 +413,7 @@ function App() {
                   subtitle="Maintainer of the club website"
                   description="The website for the Humber College Robotics Club, built with React and hosted on GitHub Pages. I maintain the site, add new features, and ensure it stays up to date with our latest projects and news."
                   skills={['Vite', 'React', 'GitHub Pages']}
-                  imageUrl={humberASVImg}
+                  media={<img src={humberASVImg} alt="Screenshot of the HumberASV.ca homepage" />}
                   primaryLink='https://humberasv.ca/'
                   primaryLinkLabel='View Project'
                   secondaryLink='https://github.com/HumberASV/HumberASV-Website'
